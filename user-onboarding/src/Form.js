@@ -1,9 +1,18 @@
-import React, {useState, useEffect, useReducer} from "react";
-import {withFormik, Form, Field} from "formik";
-import * as Yup from "yup";
-import axios from "axios";
+import React, {useState, useEffect, useReducer} from "react";  // import react and needed hooks
+import {withFormik, Form, Field} from "formik"; //import formik for use
+import * as Yup from "yup"; // import yup
+import axios from "axios"; // axios import 
+import styled from 'styled-components'
 
-const MyForm = ({errors, status,touched, values}) => {
+const Wrapper = styled.div`
+padding:0
+display:inline-block;`
+
+const Inputs = styled.div`
+margin-right:50px;
+;`
+;
+const MyForm = ({errors, status,touched, values}) => { //creating components 
     const[users, setUsers] = useState([]);
     useEffect(() => {
         console.log("status has changed", status);
@@ -14,29 +23,30 @@ const MyForm = ({errors, status,touched, values}) => {
         <div className ="formcont">
 
 <Form>
+<Wrapper> 
 
     <label htmlFor = "name">
-        Name
+        
         <Field
         id = "name"
         type = "text"
         name = "name"
-        placeholder =  "type name"
+        placeholder =  "First name"
         
         />
         {touched.name && errors.name && (
             <p> {errors.name}</p>
         )}
     </label>
-
+    
 
     <label htmlFor = "email">
 
-        Email<Field
+        <Field
         id = "email"
         type = "email"
         name = "email"
-        placeholder = "whats your email"
+        placeholder = "Email"
         
         />
     
@@ -45,13 +55,15 @@ const MyForm = ({errors, status,touched, values}) => {
         <p>{errors.email}</p>
     )}
     </label>
+
+    
     <label htmlFor = "password">
-        Password
+        
         <Field
         id = "password"
         type = "password"
         name = "password"
-        placeholder = "password"
+        placeholder = "Password"
         
         />
     
@@ -59,24 +71,35 @@ const MyForm = ({errors, status,touched, values}) => {
             <p> {errors.password}</p>
         )}
 </label>
+<br/>
+
 <label className="checkbox-container">
+<Inputs>
         Terms of Service
+        </Inputs>
         <Field
+        id="box"
           type="checkbox"
           name="tos"
-          checked={values.tos}
+          checked={values.tos} 
+          id="checkbox"
         />
         <span className="checkmark" />
       </label>  
-        <button type = "submit">Submit</button>
-
+      
+   
+        <button  className="buttonStyles" type = "submit">Submit</button>
+        </Wrapper>
 </Form>
+
 {users.map(user =>{
     return(
     <ul key = {user.id}>
         <li> name:{user.name}</li>
         <li> email:{user.email}</li>
-
+         <li> {user.password}     </li>
+         <li>{user.checked} </li>
+    
     </ul>
     );
 })}
